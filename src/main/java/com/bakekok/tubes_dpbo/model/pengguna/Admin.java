@@ -17,9 +17,23 @@ public class Admin extends Pengguna {
     }
 
     public void konfirmasiPemesanan(Pemesanan pesanan) {
-        pesanan.ubahStatus("Lunas");
-        System.out.println("Pemesanan " + pesanan.getIdPemesanan() + " telah dikonfirmasi.");
+    String status = pesanan.getStatusPemesanan();
+
+    if (status.equals("Dibatalkan")) {
+        System.out.println("Gagal: Pemesanan " + pesanan.getIdPemesanan() + 
+                           " sudah DIBATALKAN, tidak bisa dikonfirmasi.");
+        return;
     }
+
+    if (status.equals("Lunas")) {
+        System.out.println("Gagal: Pemesanan " + pesanan.getIdPemesanan() + 
+                           " sudah LUNAS sebelumnya.");
+        return;
+    }
+
+    pesanan.ubahStatus("Lunas");
+    System.out.println("Pemesanan " + pesanan.getIdPemesanan() + " telah dikonfirmasi.");
+}
 
     // Fitur Baru: Hapus Pesanan (Hard Delete)
     public void hapusPemesanan(Pemesanan pesanan, IPenyimpananData db) {
