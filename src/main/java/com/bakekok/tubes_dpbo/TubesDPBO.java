@@ -117,6 +117,7 @@ public class TubesDPBO {
         System.out.println("2. Lihat Daftar Pemesanan Masuk");
         System.out.println("3. Konfirmasi Pemesanan");
         System.out.println("4. Hapus Pemesanan");
+        System.out.println("5. Tambah Lapangan Baru");
         System.out.println("0. Logout");
         System.out.print("Pilih aksi: ");
         int pilihan = Integer.parseInt(scanner.nextLine());
@@ -148,6 +149,9 @@ public class TubesDPBO {
                 Pemesanan pesananHapus = db.cariPesanan(idHapus);
                 if (pesananHapus != null) admin.hapusPemesanan(pesananHapus, db);
                 else System.out.println("Pemesanan tidak ditemukan.");
+                break;
+            case 5:
+                tambahLapanganBaru(admin);
                 break;
             case 0:
                 currentUser.logout();
@@ -255,5 +259,34 @@ public class TubesDPBO {
                 break;
             default: System.out.println("Opsi tidak valid.");
         }
+    }
+
+    private static void tambahLapanganBaru(Admin admin) {
+        System.out.println("\n[Ketik '0' pada ID untuk KEMBALI]");
+        System.out.print("ID Lapangan   : "); String id = scanner.nextLine();
+        if (id.equals("0")) return;
+
+        System.out.print("Nama Lapangan : "); String nama = scanner.nextLine();
+        System.out.print("Jenis Rumput  : "); String rumput = scanner.nextLine();
+        System.out.print("Harga per Jam : "); double harga = Double.parseDouble(scanner.nextLine());
+
+        Lapangan lapanganBaru = new Lapangan(id, nama, rumput, harga);
+
+        System.out.print("Tambah jadwal sekarang? (y/n): ");
+        String jawab = scanner.nextLine();
+        if (jawab.equalsIgnoreCase("y")) {
+            boolean tambahLagi = true;
+            while (tambahLagi) {
+                System.out.print("  Tanggal (yyyy-mm-dd) : "); String tgl = scanner.nextLine();
+                System.out.print("  Jam Mulai (HH:mm)    : "); String jamMulai = scanner.nextLine();
+                System.out.print("  Jam Selesai (HH:mm)  : "); String jamSelesai = scanner.nextLine();
+                lapanganBaru.tambahJadwal(new Jadwal(tgl, jamMulai, jamSelesai));
+                System.out.println("  Jadwal berhasil ditambahkan.");
+                System.out.print("  Tambah jadwal lagi? (y/n): ");
+                tambahLagi = scanner.nextLine().equalsIgnoreCase("y");
+            }
+        }
+
+        admin.tambahLapangan(lapanganBaru, db);
     }
 }

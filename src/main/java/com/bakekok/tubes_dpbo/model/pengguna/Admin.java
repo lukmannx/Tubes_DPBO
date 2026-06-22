@@ -1,6 +1,7 @@
 package com.bakekok.tubes_dpbo.model.pengguna;
 
 import com.bakekok.tubes_dpbo.interfaces.IPenyimpananData;
+import com.bakekok.tubes_dpbo.model.lapangan.Lapangan;
 import com.bakekok.tubes_dpbo.model.transaksi.Pemesanan;
 
 /**
@@ -30,6 +31,12 @@ public class Admin extends Pengguna {
         pesanan.getWaktuMain().setTersedia(true);
 
         System.out.println("Pemesanan " + pesanan.getIdPemesanan() + " berhasil DIHAPUS permanen oleh Admin.");
+    }
+
+    // Fitur  Tambah Lapangan
+    public void tambahLapangan(Lapangan lapangan, IPenyimpananData db) {
+        db.simpanData(lapangan);
+        System.out.println("Lapangan '" + lapangan.getNamaLapangan() + "' berhasil ditambahkan oleh Admin.");
     }
 
     @Override
