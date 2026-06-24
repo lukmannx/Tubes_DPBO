@@ -19,7 +19,10 @@ public class Jadwal {
 
     public void setTersedia(boolean status) { this.isTersedia = status; }
     public boolean isTersedia() { return isTersedia; }
-
+    
+        public String getJamMulai() { return jamMulai; }
+        public String getJamSelesai() { return jamSelesai; }
+        
     @Override
     public String toString() {
         return tanggal + " | " + jamMulai + " - " + jamSelesai + " | Status: " + (isTersedia ? "Tersedia" : "Penuh");

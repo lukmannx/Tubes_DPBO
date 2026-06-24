@@ -25,7 +25,14 @@ public class Pemesanan {
         this.totalBiaya = hitungTotalBiaya();
     }
 
-    public double hitungTotalBiaya() { return lapanganDipilih.getHargaPerJam(); }
+    public double hitungTotalBiaya() {
+    String[] mulai   = waktuMain.getJamMulai().split(":");
+    String[] selesai = waktuMain.getJamSelesai().split(":");
+    int menitMulai   = Integer.parseInt(mulai[0]) * 60 + Integer.parseInt(mulai[1]);
+    int menitSelesai = Integer.parseInt(selesai[0]) * 60 + Integer.parseInt(selesai[1]);
+    double durasiJam = (menitSelesai - menitMulai) / 60.0;
+    return lapanganDipilih.getHargaPerJam() * durasiJam;
+    }
     public void ubahStatus(String statusBaru) { this.statusPemesanan = statusBaru; }
 
     public String getIdPemesanan() { return idPemesanan; }

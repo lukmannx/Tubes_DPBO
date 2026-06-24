@@ -20,14 +20,12 @@ public class Admin extends Pengguna {
     String status = pesanan.getStatusPemesanan();
 
     if (status.equals("Dibatalkan")) {
-        System.out.println("Gagal: Pemesanan " + pesanan.getIdPemesanan() + 
-                           " sudah DIBATALKAN, tidak bisa dikonfirmasi.");
+        System.out.println("Gagal: Pemesanan " + pesanan.getIdPemesanan() +  " sudah DIBATALKAN, tidak bisa dikonfirmasi.");
         return;
     }
 
     if (status.equals("Lunas")) {
-        System.out.println("Gagal: Pemesanan " + pesanan.getIdPemesanan() + 
-                           " sudah LUNAS sebelumnya.");
+        System.out.println("Gagal: Pemesanan " + pesanan.getIdPemesanan() +  " sudah LUNAS sebelumnya.");
         return;
     }
 

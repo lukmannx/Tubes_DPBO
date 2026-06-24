@@ -23,7 +23,16 @@ public class TubesDPBO {
     private static DatabaseLokal db = new DatabaseLokal();
     private static Scanner scanner = new Scanner(System.in);
     private static Pengguna currentUser = null;
+    
+    private static int bacaInt() {
+    try { return Integer.parseInt(scanner.nextLine()); }
+    catch (NumberFormatException e) { System.out.println("Input tidak valid! Masukkan angka."); return -1; }
+}
 
+    private static double bacaDouble() {
+    try { return Double.parseDouble(scanner.nextLine()); }
+    catch (NumberFormatException e) { System.out.println("Input tidak valid! Masukkan angka."); return -1; }
+}
     public static void main(String[] args) {
         inisialisasiDataAwal();
 
@@ -62,12 +71,13 @@ public class TubesDPBO {
         Admin admin = new Admin("A01", "Danish Admin", "admin@futsal.com", "admin123", "ADM-001");
         Pelanggan p1 = new Pelanggan("P01", "Lukman", "lukman@gmail.com", "123", "08111222333");
 
-        Lapangan lap1 = new Lapangan("L01", "Lapangan Sintetis A", "Sintetis", 120000);
+        Lapangan lap1 = new Lapangan("L01", "Lapangan Sintetis A", "Sintetis", 12000);
         lap1.tambahJadwal(new Jadwal("2023-12-01", "18:00", "19:00"));
         lap1.tambahJadwal(new Jadwal("2023-12-01", "19:00", "20:00"));
 
-        Lapangan lap2 = new Lapangan("L02", "Lapangan Vinyl B", "Vinyl", 150000);
+        Lapangan lap2 = new Lapangan("L02", "Lapangan Vinyl B", "Vinyl", 15000);
         lap2.tambahJadwal(new Jadwal("2023-12-01", "20:00", "21:00"));
+        lap2.tambahJadwal(new Jadwal("2023-12-02","20:00","22:00"));
 
         db.simpanData(admin);
         db.simpanData(p1);
@@ -120,7 +130,7 @@ public class TubesDPBO {
         System.out.println("5. Tambah Lapangan Baru");
         System.out.println("0. Logout");
         System.out.print("Pilih aksi: ");
-        int pilihan = Integer.parseInt(scanner.nextLine());
+        int pilihan = bacaInt();
 
         switch (pilihan) {
             case 1:
@@ -171,7 +181,7 @@ public class TubesDPBO {
         System.out.println("5. Beri Ulasan Lapangan");
         System.out.println("0. Logout");
         System.out.print("Pilih aksi: ");
-        int pilihan = Integer.parseInt(scanner.nextLine());
+        int pilihan = bacaInt();
 
         switch (pilihan) {
             case 1:
@@ -184,14 +194,14 @@ public class TubesDPBO {
                 break;
             case 2:
                 System.out.print("\nPilih Lapangan (1 - " + db.getTabelLapangan().size() + ") atau ketik '0' untuk KEMBALI: ");
-                int inputLap = Integer.parseInt(scanner.nextLine());
+               int inputLap = bacaInt();
                 if (inputLap == 0) break;
 
                 int idxLap = inputLap - 1;
                 if (idxLap >= 0 && idxLap < db.getTabelLapangan().size()) {
                     Lapangan lap = db.getTabelLapangan().get(idxLap);
                     System.out.print("Pilih Jadwal (1 - " + lap.getDaftarJadwal().size() + ") atau ketik '0' untuk KEMBALI: ");
-                    int inputJadwal = Integer.parseInt(scanner.nextLine());
+                    int inputJadwal = bacaInt();
                     if (inputJadwal == 0) break;
 
                     int idxJadwal = inputJadwal - 1;
@@ -208,7 +218,7 @@ public class TubesDPBO {
                         System.out.println("\n--- SILAKAN LAKUKAN PEMBAYARAN ---");
                         System.out.println("1. Transfer Bank (BCA) \n2. E-Wallet (GoPay)");
                         System.out.print("Pilih metode (atau '0' untuk batal bayar): ");
-                        int pilBayar = Integer.parseInt(scanner.nextLine());
+                        int pilBayar = bacaInt();
                         if (pilBayar == 0) {
                             pelanggan.batalkanPesanan(pesananBaru.getIdPemesanan());
                             break;
@@ -238,7 +248,7 @@ public class TubesDPBO {
                 String idLap = scanner.nextLine();
                 if (idLap.equals("0")) break;
 
-                System.out.print("Beri Rating (1-5): "); int rating = Integer.parseInt(scanner.nextLine());
+                System.out.print("Beri Rating (1-5): "); int rating = bacaInt();
                 System.out.print("Komentar: "); String komentar = scanner.nextLine();
 
                 Lapangan targetLap = null;
