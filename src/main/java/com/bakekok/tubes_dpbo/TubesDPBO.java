@@ -104,6 +104,17 @@ public class TubesDPBO {
         }
         System.out.println("Login Gagal. Email/Password salah atau hak akses tidak sesuai.");
     }
+    
+    private static void lihatUlasan() {
+        System.out.println("\n=== DAFTAR ULASAN ===");
+        if (db.getTabelUlasan().isEmpty()) {
+            System.out.println("Belum ada ulasan masuk.");
+            return;
+        }
+        for (Ulasan u : db.getTabelUlasan()) {
+            System.out.println(u);
+        }
+    }
 
     private static void register() {
         System.out.println("\n[Ketik '0' pada nama untuk KEMBALI]");
@@ -111,6 +122,13 @@ public class TubesDPBO {
         if (nama.equals("0")) return; // Logika Kembali
 
         System.out.print("Email: "); String email = scanner.nextLine();
+        //fix email double
+            for (Pengguna p : db.getTabelPengguna()) {
+                if (p.getEmail().equals(email)) {
+                System.out.println("Gagal: Email sudah terdaftar!");
+                return;
+              }
+            }
         System.out.print("Password: "); String password = scanner.nextLine();
         System.out.print("No Telp: "); String noTelp = scanner.nextLine();
 
@@ -128,6 +146,7 @@ public class TubesDPBO {
         System.out.println("3. Konfirmasi Pemesanan");
         System.out.println("4. Hapus Pemesanan");
         System.out.println("5. Tambah Lapangan Baru");
+        System.out.println("6. Lihat Ulasan/Komentar");
         System.out.println("0. Logout");
         System.out.print("Pilih aksi: ");
         int pilihan = bacaInt();
@@ -162,6 +181,9 @@ public class TubesDPBO {
                 break;
             case 5:
                 tambahLapanganBaru(admin);
+                break;
+                case 6:
+                lihatUlasan();
                 break;
             case 0:
                 currentUser.logout();
@@ -259,6 +281,7 @@ public class TubesDPBO {
                 if (targetLap != null) {
                     Ulasan ulasan = new Ulasan("UL-" + System.currentTimeMillis(), pelanggan, targetLap, rating, komentar);
                     ulasan.tambahUlasan();
+                    db.simpanData(ulasan);
                 } else {
                     System.out.println("Lapangan tidak ditemukan.");
                 }

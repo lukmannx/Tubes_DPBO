@@ -21,6 +21,8 @@ public class Ulasan {
         this.rating = rating;
         this.komentar = komentar;
     }
+    
+    
 
     public void tambahUlasan() {
         System.out.println("Ulasan dari " + pelanggan.getNama() + " berhasil dipublikasikan!");
